@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Moderno</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #006400, #008000);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="password"] {
+            padding-right: 40px; /_ Espaço para o ícone _/
+        }
+
+        input:focus {
+            border-color: #008000;
+            box-shadow: 0 0 8px rgba(0, 128, 0, 0.1);
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 1rem;
+            border-radius: 6px;
+            border: none;
+            background-color: #006400;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #008000;
+        }
+
+        .toggle-btn {
+            display: block;
+            margin-top: 1rem;
+            color: #006400;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input, button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h1>Página de Login</h1>
+        <form id="loginForm">
+            <label for="login-username">Usuário:</label>
+            <input type="text" id="login-username" name="username">
+            
+            <label for="login-password">Senha:</label>
+            <div class="input-container">
+                <input type="password" id="login-password" name="password">
+                <span class="toggle-password" onclick="togglePassword('login-password')">&#128065;</span>
+            </div>
+            
+            <button type="button" onclick="login()">Entrar</button>
+        </form>
+        <span class="toggle-btn" onclick="toggleForms()">Não tem uma conta? Cadastre-se</span>
+    </div>
+    
+    <div class="container" id="register-container" style="display: none;">
+        <h1>Página de Cadastro</h1>
+        <form id="registerForm">
+            <label for="register-username">Usuário:</label>
+            <input type="text" id="register-username" name="username">
+            
+            <label for="register-password">Senha:</label>
+            <div class="input-container">
+                <input type="password" id="register-password" name="password">
+                <span class="toggle-password" onclick="togglePassword('register-password')">&#128065;</span>
+            </div>
+            
+            <label for="register-email">Email:</label>
+            <input type="email" id="register-email" name="email">
+            
+            <button type="button" onclick="register()">Cadastrar</button>
+        </form>
+        <span class="toggle-btn" onclick="toggleForms()">Já tem uma conta? Faça login</span>
+    </div>
+
+    <script>
+        function toggleForms() {
+            const loginContainer = document.getElementById('login-container');
+            const registerContainer = document.getElementById('register-container');
+            
+            if (loginContainer.style.display === 'none') {
+                loginContainer.style.display = 'block';
+                registerContainer.style.display = 'none';
+            } else {
+                loginContainer.style.display = 'none';
+                registerContainer.style.display = 'block';
+            }
+        }
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+            } else {
+                input.type = 'password';
+            }
+        }
+        
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simulação de autenticação
+            if (username === 'admin' && password === 'Fernando') {
+                window.location.href = 'index.html';
+            } else {
+                alert('Login ou senha incorretos!');
+            }
+        }
+
+        function register() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            const email = document.getElementById('register-email').value;
+            
+            // Simulação de cadastro
+            alert('Cadastro realizado com sucesso!');
+            toggleForms();
+        }
+    </script>
+</body>
+</html>
+
