@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desdobramento de Lotofácil de Futebol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #008000, #003300);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header, footer {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header h1, footer p {
+            margin: 0;
+            color: #fff;
+        }
+
+        main {
+            background: rgba(255, 255, 255, 0.8);
+            color: #000;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .team-details-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .team {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .team-name {
+            color: #C1272D; /* Vermelho */
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            border-bottom: 2px solid #C1272D;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .placar-selectors {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .placar-selector {
+            background: #eee;
+            color: #000;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .placar-selector.active {
+            background: #c8d8ff;
+            border-color: #00269E;
+        }
+
+        .desdobramento-form {
+            margin: 20px 0;
+        }
+
+        .desdobramento-form label,
+        .desdobramento-form input,
+        .desdobramento-form button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .desdobramento-form button {
+            background-color: #4CAF50; /* Verde Claro */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .desdobramento-form button:hover {
+            background-color: #45A049; /* Verde um pouco mais escuro */
+        }
+
+        .resultados {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .result-table {
+            background: #ddd;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: center;
+            width: fit-content;
+            margin: 10px;
+        }
+
+        .result-table-header {
+            background: #00269E;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .result-table-row {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .result-table-cell {
+            padding: 10px;
+            border-left: 1px solid #ccc;
+        }
+
+        .result-table-cell:first-child {
+            border-left: none;
+        }
+
+        .share-link-input {
+            border: 1px solid #ccc;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            width: calc(100% - 22px);
+            margin: 5px 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Desdobramento de Lotofácil de Futebol</h1>
+        </header>
+        
+        <main>
+            <div class="team-details-container">
+                <div class="team">
+                    <h2 class="team-name">Time A</h2>
+                    <p>Descrição do Time A</p>
+                </div>
+                <div class="team">
+                    <h2 class="team-name">Time B</h2>
+                    <p>Descrição do Time B</p>
+                </div>
+                <div class="team">
+                    <h2 class="team-name">Time C</h2>
+                    <p>Descrição do Time C</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Selecione os placares:</h2>
+                <div id="placarSelectors" class="placar-selectors">
+                    <!-- Selects serão adicionados dinamicamente aqui -->
+                </div>
+                <button type="button" onclick="adicionarPlacar()">Adicionar Placar</button>
+            </div>
+
+            <form id="desdobramentoForm" class="desdobramento-form">
+                <label for="combTam">Tamanho das combinações:</label>
+                <input type="number" id="combTam" name="combTam" min="1" placeholder="Ex: 3">
+                <button type="button" onclick="gerarDesdobramento()">Gerar Desdobramento</button>
+            </form>
+
+            <div class="section">
+                <h2>Resultados:</h2>
+                <div id="resultados" class="resultados"></div>
+            </div>
+
+            <div class="section">
+                <h2>Link do Desdobramento:</h2>
+                <input type="text" id="shareLink" class="share-link-input" readonly>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2024 Desdobramento de Lotofácil de Futebol</p>
+        </footer>
+    </div>
+
+    <script>
+        const placares = [];
+
+        function adicionarPlacar() {
+            const placarSelectors = document.getElementById('placarSelectors');
+            const select = document.createElement('select');
+
+            for (let i = 0; i <= 5; i++) {
+                for (let j = 0; j <= 5; j++) {
+                    const option = document.createElement('option');
+                    option.value = `${i}-${j}`;
+                    option.textContent = `${i}-${j}`;
+                    select.appendChild(option);
+                }
+            }
+
+            placarSelectors.appendChild(select);
+            placares.push(select); // Adiciona o select ao array de placares
+        }
+
+        function gerarDesdobramento() {
+            const combTam = document.getElementById('combTam').value;
+
+            if (!combTam) {
+                alert('Por favor, informe o tamanho das combinações.');
+                return;
+            }
+
+            // Placeholder for lista1 and lista2 - update based on your needs
+            const lista1 = ['1', '2', '3']; // Example
+            const lista2 = ['4', '5', '6']; // Example
+
+            const resultados = document.getElementById('resultados');
+            resultados.innerHTML = '';
+
+            const combinacoes = [];
+
+            lista1.forEach(item1 => {
+                lista2.forEach(item2 => {
+                    combinacoes.push(`${item1} x ${item2} = ${item1 * item2}`);
+                });
+            });
+
+            combinacoes.forEach(comb => {
+                const p = document.createElement('p');
+                p.textContent = comb;
+                resultados.appendChild(p);
+            });
+        }
+
+        function carregarEstado() {
+            const params = new URLSearchParams(window.location.search);
+            const placaresParams = params.get('placares') ? params.get('placares').split(',') : [];
+            const combTam = params.get('combTam');
+
+            placaresParams.forEach(placar => {
+                adicionarPlacar();
+                placares[placares.length - 1].value = placar;
+            });
+
+            if (combTam) {
+                document.getElementById('combTam').value = combTam;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarEstado();
+        });
+
+    </script>
+</body>
+</html>
